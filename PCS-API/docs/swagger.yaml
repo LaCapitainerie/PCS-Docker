@@ -1,0 +1,246 @@
+definitions:
+  models.Admin:
+    properties:
+      id:
+        type: string
+      nickname:
+        type: string
+      site:
+        type: string
+      userId:
+        type: string
+    type: object
+  models.Property:
+    properties:
+      address:
+        type: string
+      administrationValidation:
+        type: boolean
+      bathroom:
+        type: integer
+      city:
+        type: string
+      country:
+        type: string
+      description:
+        type: string
+      garage:
+        type: integer
+      id:
+        type: string
+      lessorId:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      room:
+        type: integer
+      surface:
+        type: integer
+      type:
+        type: string
+      zipCode:
+        type: string
+    type: object
+  models.PropertyImage:
+    properties:
+      ID:
+        type: string
+      Path:
+        type: string
+      property_id:
+        type: string
+    type: object
+  models.Sidebar:
+    properties:
+      Hover:
+        type: string
+      Href:
+        type: string
+      Icon:
+        type: string
+      Id_tab:
+        type: string
+      Permission:
+        type: integer
+    type: object
+  models.Traveler:
+    properties:
+      Id:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      userId:
+        type: string
+    type: object
+  models.UsersDTO:
+    properties:
+      avatar:
+        type: string
+      description:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: string
+      lastConnectionDate:
+        type: string
+      lastName:
+        type: string
+      mail:
+        type: string
+      nickname:
+        type: string
+      password:
+        type: string
+      phoneNumber:
+        type: string
+      registerDate:
+        type: string
+      type:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/Admin:
+    get:
+      description: Récupère tous les Admin
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Admin'
+            type: array
+      summary: Admin
+      tags:
+      - administration
+  /api/Property:
+    get:
+      description: Récupère tous les Property
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Property'
+            type: array
+      summary: Property
+      tags:
+      - administration
+  /api/Property_image:
+    get:
+      description: Récupère tous les PropertyImage
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.PropertyImage'
+            type: array
+      summary: PropertyImage
+      tags:
+      - PropertyImage
+  /api/Traveler:
+    get:
+      description: Récupère tous les Traveler
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Traveler'
+            type: array
+      summary: Traveler
+      tags:
+      - administration
+  /api/sidebar:
+    get:
+      description: Récupère tous les Sidebar
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Sidebar'
+            type: array
+      summary: Sidebar
+      tags:
+      - administration
+  /api/user/login:
+    post:
+      description: Se connecte à un utilisateur
+      parameters:
+      - description: Mail de l'utilisateur
+        in: body
+        name: mail
+        required: true
+        schema:
+          type: string
+      - description: Mot de passe de l'utilisateur
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Retourne un token de connexion
+          schema:
+            type: string
+        "400":
+          description: Requête incorrecte - données invalides
+          schema:
+            type: string
+        "409":
+          description: Conflit - L'email ou le mot de passe existe déjà
+          schema:
+            type: string
+      summary: User
+      tags:
+      - Connexion
+  /api/user/register:
+    post:
+      description: Crée un nouvel utilisateur
+      parameters:
+      - description: User to create
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UsersDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Retourne l'utilisateur crée
+          schema:
+            $ref: '#/definitions/models.UsersDTO'
+        "400":
+          description: Requête incorrecte - données invalides
+          schema:
+            type: string
+        "409":
+          description: Conflit - L'email ou le mot de passe existe déjà
+          schema:
+            type: string
+      summary: User
+      tags:
+      - Création
+swagger: "2.0"
